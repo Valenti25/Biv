@@ -17,7 +17,7 @@ export default function Input() {
         placeholder="Type something..."
         value={text}
         onChange={(e) => setText(e.target.value)}
-        className="w-full p-2 pl-24 pr-14 border border-gray-200 rounded-full focus:outline-none focus:ring-2 focus:ring-main-gradient/20 transition-all shadow-xs"
+        className="w-full p-2 pl-24 pr-14 border border-gray-200 rounded-full focus:outline-none shadow-sm"
       />
 
       <div className="absolute right-2 flex items-center">

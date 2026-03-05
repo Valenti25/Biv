@@ -1,11 +1,11 @@
-import { ServiceData } from "@/app/biv_service_id/types/bivservice";
+import { ServiceData } from "@/app/(user)/biv_service_id/types/bivservice";
 export const servicesData: Record<string, ServiceData> = {
   
   // =======================================================
   // 1. Biv Ride (บริการรถรับ-ส่ง)
   // =======================================================
   "biv-ride": {
-    title: "บริการ Biv Ride",
+    title: "Biv Ride",
     image: "/images/ride-cover.jpg",
     description: "บริการรถรับ-ส่งสำหรับผู้สูงอายุ รองรับวีลแชร์ ปลอดภัย อุ่นใจทุกการเดินทาง",
     
@@ -55,7 +55,7 @@ export const servicesData: Record<string, ServiceData> = {
   // 2. Biv Buddy (เพื่อนดูแล / พาเที่ยว)
   // =======================================================
   "biv-buddy": {
-    title: "บริการ Biv Buddy",
+    title: "Biv Buddy",
     image: "/images/buddy-cover.jpg",
     description: "เพื่อนลูกหลานพาเที่ยว คลายเหงา เดินห้าง ไหว้พระ เน้นความสุขทางใจ",
 
@@ -86,7 +86,7 @@ export const servicesData: Record<string, ServiceData> = {
   // 3. Biv Daily (ดูแลกิจวัตรประจำวัน)
   // =======================================================
   "biv-daily": {
-    title: "บริการ Biv Daily",
+    title: "Biv Daily",
     image: "/images/daily-cover.jpg",
     description: "ผู้ช่วยดูแลกิจวัตรประจำวัน อาบน้ำ ป้อนข้าว พยุงเดิน สำหรับผู้ที่ช่วยเหลือตัวเองได้น้อย",
 
@@ -131,7 +131,7 @@ export const servicesData: Record<string, ServiceData> = {
   // 4. Biv Beside (เฝ้าไข้ข้างเตียง)
   // =======================================================
   "biv-beside": {
-    title: "บริการ Biv Beside",
+    title: "Biv Beside",
     image: "/images/beside-cover.jpg",
     description: "บริการเฝ้าไข้ที่โรงพยาบาลหรือที่บ้าน ดูแลตลอด 24 ชม. โดยทีมงานมืออาชีพ",
 

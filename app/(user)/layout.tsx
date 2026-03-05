@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import "./globals.css";
-import Navbar from "./components/navbar";
-import ConditionalLayout from "./components/layout/ConditionalLayout";
+import "../globals.css";
+import Navbar from "../components/navbar";
+import ConditionalLayout from "../components/layout/ConditionalLayout";
 
 export const metadata: Metadata = {
   title: "biv",

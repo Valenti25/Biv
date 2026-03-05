@@ -1,8 +1,8 @@
 export default function Navbar() {
   return (
-    <div className="w-full bg-green">
+    <div className="w-full bg-pink">
       <div>
-        <ul className="grid grid-cols-3 p-4">
+        <ul className="grid grid-cols-3 p-4 text-white">
           <li className="text-center">Home</li>
           <li className="text-center">About</li>
           <li className="text-center">Contact</li>

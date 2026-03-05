@@ -14,14 +14,14 @@ function wait(ms: number) {
   return new Promise((r) => setTimeout(r, ms));
 }
 
-export default function TinyStars({
+export default function Stars({
   box = { w: 40, h: 80 },
   big = { size: 20, x: 20, y: 42 }, // static star #1
   s1 = { size: 10, x: 25, y: 30 }, // animated star #3 (top)
   s2 = { size: 10, x: 25, y: 45 }, // animated star #2 (bottom)
   speed = 0.35, // up/down duration (sec)
-  hold = 0.65,  // hold time per pattern (sec)
-  gap = 0.12,   // tiny delay between steps (sec)
+  hold = 0.65, // hold time per pattern (sec)
+  gap = 0.12, // tiny delay between steps (sec)
 }: {
   box?: { w: number; h: number };
   big?: { size: number; x: number; y: number };
@@ -53,52 +53,103 @@ export default function TinyStars({
   // loop with "clear all after pattern 2" then "show all"
   React.useEffect(() => {
     if (reduce) return;
-
     let mounted = true;
     (async () => {
-      while (mounted) {
-        // Pattern 1: show s1
-        await c1.start({
-          opacity: [0, 1],
-          scale: [0.7, 1],
-          transition: { duration: speed, ease: "easeOut" },
-        });
-        await wait(hold * 1000);
+      try {
+        while (mounted) {
+          await c1.start({
+            opacity: [0, 1],
+            scale: [0.7, 1],
+            transition: { duration: speed, ease: "easeOut" },
+          });
+          if (!mounted) break;
 
-        // Pattern 2: hide s1 -> show s2
-        await c1.start({
-          opacity: 0,
-          scale: 0.9,
-          transition: { duration: Math.max(0.2, speed * 0.6), ease: "easeInOut" },
-        });
-        await wait(gap * 1000);
-        await c2.start({
-          opacity: [0, 1],
-          scale: [0.7, 1],
-          transition: { duration: speed, ease: "easeOut" },
-        });
-        await wait(hold * 1000);
+          await wait(hold * 1000);
+          if (!mounted) break;
 
-        // *** NEW: Clear all after pattern 2 ***
-        await Promise.all([
-          c1.start({ opacity: 0, scale: 0.9, transition: { duration: Math.max(0.18, speed * 0.55), ease: "easeInOut" } }),
-          c2.start({ opacity: 0, scale: 0.9, transition: { duration: Math.max(0.18, speed * 0.55), ease: "easeInOut" } }),
-        ]);
-        await wait(Math.max(0, gap * 1000)); // small pause after clear
+          // Pattern 2: hide s1 -> show s2
+          await c1.start({
+            opacity: 0,
+            scale: 0.9,
+            transition: {
+              duration: Math.max(0.2, speed * 0.6),
+              ease: "easeInOut",
+            },
+          });
+          if (!mounted) break;
+          await wait(gap * 1000);
+          if (!mounted) break;
+          await c2.start({
+            opacity: [0, 1],
+            scale: [0.7, 1],
+            transition: { duration: speed, ease: "easeOut" },
+          });
+          if (!mounted) break;
+          await wait(hold * 1000);
+          if (!mounted) break;
 
-        // Pattern 3: show ALL stars together (s1 + s2)
-        await Promise.all([
-          c1.start({ opacity: [0, 1], scale: [0.7, 1], transition: { duration: speed, ease: "easeOut" } }),
-          c2.start({ opacity: [0, 1], scale: [0.7, 1], transition: { duration: speed, ease: "easeOut" } }),
-        ]);
-        await wait(hold * 1000);
+          await Promise.all([
+            c1.start({
+              opacity: 0,
+              scale: 0.9,
+              transition: {
+                duration: Math.max(0.18, speed * 0.55),
+                ease: "easeInOut",
+              },
+            }),
+            c2.start({
+              opacity: 0,
+              scale: 0.9,
+              transition: {
+                duration: Math.max(0.18, speed * 0.55),
+                ease: "easeInOut",
+              },
+            }),
+          ]);
+          if (!mounted) break;
+          await wait(Math.max(0, gap * 1000));
+          if (!mounted) break;
 
-        // Reset before the next cycle
-        await Promise.all([
-          c1.start({ opacity: 0, scale: 0.9, transition: { duration: Math.max(0.2, speed * 0.6), ease: "easeInOut" } }),
-          c2.start({ opacity: 0, scale: 0.9, transition: { duration: Math.max(0.2, speed * 0.6), ease: "easeInOut" } }),
-        ]);
-        await wait(Math.max(0, (gap * 0.7) * 1000));
+          await Promise.all([
+            c1.start({
+              opacity: [0, 1],
+              scale: [0.7, 1],
+              transition: { duration: speed, ease: "easeOut" },
+            }),
+            c2.start({
+              opacity: [0, 1],
+              scale: [0.7, 1],
+              transition: { duration: speed, ease: "easeOut" },
+            }),
+          ]);
+          if (!mounted) break;
+          await wait(hold * 1000);
+          if (!mounted) break;
+
+          await Promise.all([
+            c1.start({
+              opacity: 0,
+              scale: 0.9,
+              transition: {
+                duration: Math.max(0.2, speed * 0.6),
+                ease: "easeInOut",
+              },
+            }),
+            c2.start({
+              opacity: 0,
+              scale: 0.9,
+              transition: {
+                duration: Math.max(0.2, speed * 0.6),
+                ease: "easeInOut",
+              },
+            }),
+          ]);
+          if (!mounted) break;
+          await wait(Math.max(0, gap * 0.7 * 1000));
+          if (!mounted) break;
+        }
+      } catch (error) {
+        console.error("Star animation error:", error);
       }
     })();
 
@@ -121,11 +172,17 @@ export default function TinyStars({
       >
         <path d={PATH_BIG} fill={`url(#${gidBig})`} />
         <defs>
-          {/* CHANGED COLOR HERE */}
-          <linearGradient id={gidBig} x1="41.5" y1="40" x2="127" y2="131" gradientUnits="userSpaceOnUse">
-            <stop stopColor="#A8E063" /> {/* Light Lime Green */}
-            <stop offset="0.5" stopColor="#56AB2F" /> {/* Leaf Green */}
-            <stop offset="1" stopColor="#11998E" /> {/* Teal Green */}
+          <linearGradient
+            id={gidBig}
+            x1="41.5"
+            y1="40"
+            x2="127"
+            y2="131"
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop stopColor="#FF8FA3" /> {/* Light Pink */}
+            <stop offset="0.5" stopColor="#FF4D6D" /> {/* Base Pink/Red */}
+            <stop offset="1" stopColor="#C9184A" /> {/* Dark Pink */}
           </linearGradient>
         </defs>
       </svg>
@@ -143,11 +200,17 @@ export default function TinyStars({
       >
         <path d={PATH_SMALL} fill={`url(#${gidS1})`} />
         <defs>
-          {/* CHANGED COLOR HERE */}
-          <linearGradient id={gidS1} x1="20.5" y1="19.4162" x2="62.7349" y2="64.368" gradientUnits="userSpaceOnUse">
-            <stop stopColor="#A8E063" />
-            <stop offset="0.5" stopColor="#56AB2F" />
-            <stop offset="1" stopColor="#11998E" />
+          <linearGradient
+            id={gidS1}
+            x1="20.5"
+            y1="19.4162"
+            x2="62.7349"
+            y2="64.368"
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop stopColor="#FF8FA3" />
+            <stop offset="0.5" stopColor="#FF4D6D" />
+            <stop offset="1" stopColor="#C9184A" />
           </linearGradient>
         </defs>
       </motion.svg>
@@ -165,11 +228,17 @@ export default function TinyStars({
       >
         <path d={PATH_SMALL} fill={`url(#${gidS2})`} />
         <defs>
-          {/* CHANGED COLOR HERE */}
-          <linearGradient id={gidS2} x1="20.5" y1="19.4162" x2="62.7349" y2="64.368" gradientUnits="userSpaceOnUse">
-            <stop stopColor="#A8E063" />
-            <stop offset="0.5" stopColor="#56AB2F" />
-            <stop offset="1" stopColor="#11998E" />
+          <linearGradient
+            id={gidS2}
+            x1="20.5"
+            y1="19.4162"
+            x2="62.7349"
+            y2="64.368"
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop stopColor="#FF8FA3" />
+            <stop offset="0.5" stopColor="#FF4D6D" />
+            <stop offset="1" stopColor="#C9184A" />
           </linearGradient>
         </defs>
       </motion.svg>

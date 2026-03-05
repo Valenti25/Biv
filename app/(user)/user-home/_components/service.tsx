@@ -1,27 +1,26 @@
 import React from "react";
-import Link from "next/link"; // 1. นำเข้า Link ของ Next.js
+import Link from "next/link";
 
-// 2. เพิ่ม id ให้กับข้อมูลแต่ละตัว (id นี้จะถูกส่งไปที่ [id]/page.tsx)
 const services = [
   {
-    id: "biv-ride", 
+    id: "biv-ride",
     title: "Biv Ride",
-    image: "/images/ride.jpg", 
+    image: "/images/ride.jpg",
   },
   {
     id: "biv-buddy",
     title: "Biv Buddy",
-    image: "/images/buddy.jpg", 
+    image: "/images/buddy.jpg",
   },
   {
     id: "biv-daily",
     title: "Biv Daily",
-    image: "/images/daily.jpg", 
+    image: "/images/daily.jpg",
   },
   {
     id: "biv-beside",
     title: "Biv Beside",
-    image: "/images/beside.jpg", 
+    image: "/images/beside.jpg",
   },
 ];
 
@@ -32,20 +31,17 @@ export default function PopularServices() {
 
       <div className="grid grid-cols-2 gap-3 mb-4">
         {services.map((service) => (
-          /* 3. ใช้ Link หุ้มแทน div และส่ง href ไปตาม id */
-          <Link 
-            href={`/service/${service.id}`} 
+          <Link
+            href={`/biv_service_id/${service.id}`}
             key={service.id}
-            className="relative h-28 rounded-xl overflow-hidden cursor-pointer group shadow-sm block" // เพิ่ม block เพื่อให้เต็มพื้นที่
+            className="relative h-28 rounded-xl overflow-hidden cursor-pointer group shadow-sm block"
           >
-            {/* รูปภาพพื้นหลัง */}
-            <img 
-              src={service.image} 
+            <img
+              src={service.image}
               alt={service.title}
               className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
             />
-            
-            {/* Overlay */}
+
             <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
               <span className="text-white font-bold text-lg md:text-xl">
                 {service.title}
